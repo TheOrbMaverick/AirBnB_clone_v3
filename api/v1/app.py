@@ -7,7 +7,7 @@ app = Flask(__name__)
 """Assigning app to Flask"""
 
 
-app.route("/")
+@app.route("/")
 def hello_world():
     """ Return Hello World """
     return "<p>Hello World!</p>"
