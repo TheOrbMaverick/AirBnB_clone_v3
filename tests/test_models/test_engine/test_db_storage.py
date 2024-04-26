@@ -66,6 +66,25 @@ test_db_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
+            
+    def test_count_all_objects(self):
+        """Test counting all objects"""
+        count = models.storage.count()
+        self.assertIsInstance(count, int)
+        self.assertGreaterEqual(count, 0)
+
+    def test_count_state_objects(self):
+        """Test counting State objects"""
+        count = models.storage.count(State)
+        self.assertIsInstance(count, int)
+        self.assertGreaterEqual(count, 0)
+
+    def test_get_first_state(self):
+        """Test retrieving the first State object"""
+        state_objs = models.storage.all(State)
+        first_state_id = list(state_objs.values())[0].id
+        state = models.storage.get(State, first_state_id)
+        self.assertIsInstance(state, State)
 
 
 class TestFileStorage(unittest.TestCase):
