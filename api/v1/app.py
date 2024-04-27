@@ -19,7 +19,7 @@ def hello_world():
 
 
 @app.teardown_appcontext
-def teardown(self):
+def tear(self):
     """Close the current SQLAlchemy session."""
     storage.close()
 
