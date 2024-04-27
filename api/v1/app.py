@@ -1,10 +1,12 @@
-from flask import Flask, jsonify
-import models
-from api.v1.views import app_views
-import os
+#!/usr/bin/python3
 """
 Using flask framework for building
 """
+
+from flask import Flask
+import models
+from api.v1.views import app_views
+import os
 
 
 app = Flask(__name__)
