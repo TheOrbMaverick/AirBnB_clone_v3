@@ -2,7 +2,7 @@
 """
 Using flask framework for building
 """
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -18,6 +18,11 @@ app.register_blueprint(app_views)
 def hello_world():
     """ Return Hello World """
     return "<p>Hello World!</p>"
+
+@app.route("/api/v1/status")
+def status():
+    """ Status page"""
+    return jsonify({"status": "OK"})
 
 
 @app.teardown_appcontext
