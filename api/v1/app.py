@@ -1,18 +1,12 @@
 #!/usr/bin/python3
-"""
-Using flask framework for building
-"""
-import sys
-sys.path.append('/Users/macbookair/Documents/ALX/AirBnB_clone_v3')
-from flask import Flask, jsonify
+""" Using flask framework for building """
+from flask import Flask
 from models import storage
 from api.v1.views import app_views
 from os import getenv
-from flask_cors import CORS
 
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/api/*": {"origins": "0.0.0.0"}})
 
 app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
@@ -22,6 +16,7 @@ app.register_blueprint(app_views)
 def hello_world():
     """ Return Hello World """
     return "<p>Hello World!</p>"
+
 
 @app.teardown_appcontext
 def teardown(self):
