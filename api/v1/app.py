@@ -2,9 +2,8 @@
 """
 Using flask framework for building
 """
-
 from flask import Flask
-import models
+from models import storage
 from api.v1.views import app_views
 import os
 
@@ -22,9 +21,9 @@ def hello_world():
 
 
 @app.teardown_appcontext
-def teardown_appcontext(exception):
+def teardown():
     """Close the current SQLAlchemy session."""
-    models.storage.close()
+    storage.close()
 
 
 if __name__ == "__main__":
