@@ -6,10 +6,10 @@ import os
 Using flask framework for building
 """
 
-app = Flask(__name__)
-"""Assigning app to Flask"""
 
-# Register the blueprint app_views to your Flask instance app
+app = Flask(__name__)
+
+
 app.register_blueprint(app_views)
 
 
@@ -19,7 +19,6 @@ def hello_world():
     return "<p>Hello World!</p>"
 
 
-# Declare a method to handle teardown_appcontext that calls storage.close()
 @app.teardown_appcontext
 def teardown_appcontext(exception):
     """Close the current SQLAlchemy session."""
