@@ -9,7 +9,7 @@ Using flask framework for building
 app = Flask(__name__)
 """Assigning app to Flask"""
 
-""" Register the blueprint app_views to your Flask instance app """"
+""" Register the blueprint app_views to your Flask instance app """
 app.register_blueprint(app_views)
 
 
