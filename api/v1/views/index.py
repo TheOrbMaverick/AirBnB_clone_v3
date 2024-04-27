@@ -21,9 +21,9 @@ def status():
     return jsonify({"status": "OK"})
 
 @app_views.route("/stats", methods=["GET"])
-def stats():
-    """ Return count """
-    number_of = {}
+def count():
+    """ Get total number of instances"""
+    count_d = {}
     for cls in classes:
-        number_of[cls] = storage.count(classes[cls])
-    return jsonify(number_of)
+        count_d[cls] = storage.count(classes[cls])
+    return jsonify(count_d)
