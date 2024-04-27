@@ -1,5 +1,5 @@
 from flask import Flask, jsonify
-from models import storage
+import models
 from api.v1.views import app_views
 import os
 """
@@ -23,7 +23,7 @@ def hello_world():
 @app.teardown_appcontext
 def teardown_appcontext(exception):
     """Close the current SQLAlchemy session."""
-    storage.close()
+    models.storage.close()
 
 
 if __name__ == "__main__":
