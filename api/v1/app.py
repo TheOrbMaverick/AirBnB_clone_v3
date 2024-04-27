@@ -12,16 +12,19 @@ app = Flask(__name__)
 # Register the blueprint app_views to your Flask instance app
 app.register_blueprint(app_views)
 
+
 @app.route("/")
 def hello_world():
     """ Return Hello World """
     return "<p>Hello World!</p>"
+
 
 # Declare a method to handle teardown_appcontext that calls storage.close()
 @app.teardown_appcontext
 def teardown_appcontext(exception):
     """Close the current SQLAlchemy session."""
     storage.close()
+
 
 if __name__ == "__main__":
     """ If script name is main """
