@@ -26,5 +26,5 @@ def stats():
     """ Return the full count """
     number_of = {}
     for cls in classes:
-        number_of[cls] = storage.count(classes[cls])
+        number_of[cls] = int(storage.count(classes[cls]))
     return jsonify(number_of)
