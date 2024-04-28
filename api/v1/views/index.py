@@ -20,6 +20,7 @@ def status():
     """ Status page """
     return jsonify({"status": "OK"})
 
+
 @app_views.route("/stats", methods=["GET"])
 def stats():
     """ Return the full count """
