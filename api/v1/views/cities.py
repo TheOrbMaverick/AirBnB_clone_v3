@@ -2,13 +2,14 @@
 """City class"""
 from flask import jsonify, abort, request
 from api.v1.views import app_views
-from models import storage, State, City
+from models import storage
+from models.city import City
 
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'])
 def get_state_cities(state_id):
     """Retrieves the list of all City objects of a State"""
-    state = storage.get(State, state_id)
+    state = storage.get(City, state_id)
     if state is None:
         abort(404)
     cities = [city.to_dict() for city in state.cities]
@@ -38,7 +39,7 @@ def delete_city(city_id):
 @app_views.route('/states/<state_id>/cities', methods=['POST'])
 def create_city(state_id):
     """Creates a City"""
-    state = storage.get(State, state_id)
+    state = storage.get(City, state_id)
     if state is None:
         abort(404)
     if not request.json:
