@@ -33,7 +33,6 @@ def delete_state(state_id):
     state_obj = [obj.to_dict() for obj in all_states if obj.id == state_id]
     if state_obj == []:
         abort(404)
-    state_obj.remove(state_obj[0])
     for obj in all_states:
         if obj.id == state_id:
             storage.delete(obj)
