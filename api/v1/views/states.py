@@ -25,4 +25,3 @@ def list_state_by_id(state_id):
             list_states.append(obj_dict)
         else:
             abort(404)
-        
