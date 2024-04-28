@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""State class"""
+"""State class api"""
 from api.v1.views import app_views
 from flask import jsonify, abort, request
 from models import storage
@@ -16,10 +16,10 @@ def get_all_states():
 @app_views.route('/states/<state_id>', methods=['GET'])
 def get_state(state_id):
     """Retrieves a State object"""
-    state = storage.get(State, state_id)
-    if state is None:
+    state = [obj.to_dict() for obj in storage.all("State") if obj.id == state_id]
+    if not state:
         abort(404)
-    return jsonify(state.to_dict())
+    return jsonify(state[0])
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'])
