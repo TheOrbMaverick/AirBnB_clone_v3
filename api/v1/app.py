@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ Using flask framework for building """
-from flask import Flask
+from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -22,6 +22,11 @@ def tear(self):
     """Close the current SQLAlchemy session."""
     storage.close()
 
+
+@app.errorhandler(404)
+def unfounded():
+    """ Handle 404 unfound page """
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 if __name__ == "__main__":
     """ If script name is main """
