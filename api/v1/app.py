@@ -24,7 +24,7 @@ def tear(self):
 
 
 @app.errorhandler(404)
-def unfounded():
+def unfounded(error):
     """ Handle 404 unfound page """
     return make_response(jsonify({"error": "Not found"}), 404)
 
