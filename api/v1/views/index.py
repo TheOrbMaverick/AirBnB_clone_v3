@@ -10,9 +10,9 @@ from models.city import City
 from models.amenity import Amenity
 from models.review import Review
 
-classes = {"users": "User", "places": "Place", "states": "State",
-           "cities": "City", "amenities": "Amenity",
-           "reviews": "Review"}
+classes = {"users": User, "places": Place, "states": State,
+           "cities": City, "amenities": Amenity,
+           "reviews": Review}
 
 
 @app_views.route("/status", methods=["GET"])
@@ -21,9 +21,9 @@ def status():
     return jsonify({"status": "OK"})
 
 @app_views.route("/stats", methods=["GET"])
-def count():
-    """ Get total number of instances"""
-    count_d = {}
+def stats():
+    """ Return the full count """
+    number_of = {}
     for cls in classes:
-        count_d[cls] = storage.count(classes[cls])
-    return jsonify(count_d)
+        number_of[cls] = storage.count(classes[cls])
+    return jsonify(number_of)
