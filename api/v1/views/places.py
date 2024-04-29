@@ -50,7 +50,7 @@ def create_place(city_id):
         abort(400, "Missing user_id")
     if 'name' not in request.json:
         abort(400, "Missing name")
-    user_id = request.json['user_id']
+    user_id = request.json["user_id"]
     user = storage.get(User, user_id)
     if not user:
         abort(404)
