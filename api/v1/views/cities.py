@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""City class"""
+"""City objects api"""
 from flask import jsonify, abort, request
 from api.v1.views import app_views
 from models import storage
@@ -33,7 +33,7 @@ def delete_city(city_id):
         abort(404)
     storage.delete(city)
     storage.save()
-    return jsonify({})
+    return jsonify({}), 200
 
 
 @app_views.route('/states/<state_id>/cities', strict_slashes=False, methods=['POST'])
