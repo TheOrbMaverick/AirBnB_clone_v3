@@ -8,14 +8,18 @@ from datetime import datetime
 import uuid
 
 
-@app_views.route('/places/', methods=['GET'])
-def list_places():
-    '''Retrieves a list of all Place objects'''
-    list_stored_places = [obj.to_dict() for obj in storage.all("Place").values()]
+@app_views.route('/cities/<city_id>/places', strict_slashes=False, methods=['GET'])
+def list_places(city_id):
+    """ Retrieves a list of all Place objects """
+    
+    list_stored_places = [obj.to_dict() for obj in storage.all("City").values()
+                          if obj.id == city_id]
+    if list_stored_places == []:
+        abort(404)
     return jsonify(list_stored_places)
 
 
-@app_views.route('/places/<place_id>', methods=['GET'])
+@app_views.route('/places/<place_id>', strict_slashes=False, methods=['GET'])
 def get_place(place_id):
     '''Retrieves an Place object'''
     all_stored_places = storage.all("Place").values()
@@ -26,7 +30,7 @@ def get_place(place_id):
     return jsonify(one_place_obj[0])
 
 
-@app_views.route('/places/<place_id>', methods=['DELETE'])
+@app_views.route('/places/<place_id>', strict_slashes=False, methods=['DELETE'])
 def delete_place(place_id):
     '''Deletes an Place object'''
     all_stored_places = storage.all("Place").values()
@@ -42,7 +46,7 @@ def delete_place(place_id):
     return jsonify({}), 200
 
 
-@app_views.route('/places/', methods=['POST'])
+@app_views.route('/places/', strict_slashes=False, methods=['POST'])
 def create_place():
     '''Creates an Place'''
     if not request.get_json():
@@ -57,7 +61,7 @@ def create_place():
     return jsonify(places[0]), 201
 
 
-@app_views.route('/places/<place_id>', methods=['PUT'])
+@app_views.route('/places/<place_id>', strict_slashes=False, methods=['PUT'])
 def updates_place(place_id):
     '''Updates an Place object'''
     all_stored_places = storage.all("Place").values()
