@@ -40,3 +40,21 @@ def add_amenity():
     amenity_data = request.get_json()
     amenity = Amenity(**amenity_data)
     return jsonify(amenity.to_dict()), 201
+
+
+@app_views.route("amenities/<amenity_id>", strict_slashes=False, methods=["POST"])
+def put_amenity(amenity_id):
+    amenity = storage.get(Amenity, amenity_id)
+    if not amenity:
+        abort(404)
+    if not request.get_json():
+        abort(404, "Not a JSON")
+    amenity_data = request.get_json()
+    # Ignore keys: id, created_at, updated_at
+    amenity_data.pop('id', None)
+    amenity_data.pop('created_at', None)
+    amenity_data.pop('updated_at', None)
+    for k, v in amenity_data.items():
+        setattr(amenity, k, v)
+    amenity.save()
+    return jsonify(amenity.to_dict()), 200
