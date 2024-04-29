@@ -8,10 +8,12 @@ from datetime import datetime
 import uuid
 
 
-@app_views.route('/cities/<city_id>/places', strict_slashes=False, methods=['GET'])
+@app_views.route(
+        '/cities/<city_id>/places', strict_slashes=False, methods=['GET']
+        )
 def list_places(city_id):
     """ Retrieves a list of all Place objects """
-    
+
     list_stored_places = [obj.to_dict() for obj in storage.all("City").values()
                           if obj.id == city_id]
     if list_stored_places == []:
@@ -23,19 +25,23 @@ def list_places(city_id):
 def get_place(place_id):
     '''Retrieves an Place object'''
     all_stored_places = storage.all("Place").values()
-    one_place_obj = [obj.to_dict() for obj in all_stored_places
-                   if obj.id == place_id]
+    one_place_obj = [
+        obj.to_dict() for obj in all_stored_places if obj.id == place_id
+        ]
     if one_place_obj == []:
         abort(404)
     return jsonify(one_place_obj[0])
 
 
-@app_views.route('/places/<place_id>', strict_slashes=False, methods=['DELETE'])
+@app_views.route(
+        '/places/<place_id>', strict_slashes=False, methods=['DELETE']
+        )
 def delete_place(place_id):
     '''Deletes an Place object'''
     all_stored_places = storage.all("Place").values()
-    one_place_obj = [obj.to_dict() for obj in all_stored_places
-                   if obj.id == place_id]
+    one_place_obj = [
+        obj.to_dict() for obj in all_stored_places if obj.id == place_id
+        ]
     if one_place_obj == []:
         abort(404)
     one_place_obj.remove(one_place_obj[0])
@@ -65,8 +71,9 @@ def create_place():
 def updates_place(place_id):
     '''Updates an Place object'''
     all_stored_places = storage.all("Place").values()
-    one_place_obj = [obj.to_dict() for obj in all_stored_places
-                   if obj.id == place_id]
+    one_place_obj = [
+        obj.to_dict() for obj in all_stored_places if obj.id == place_id
+        ]
     if one_place_obj == []:
         abort(404)
     if not request.get_json():
