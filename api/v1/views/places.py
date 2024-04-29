@@ -8,9 +8,7 @@ from datetime import datetime
 import uuid
 
 
-@app_views.route(
-        '/cities/<city_id>/places', strict_slashes=False, methods=['GET']
-        )
+@app_views.route("/cities/<city_id>/places", strict_slashes=False)
 def list_places(city_id):
     """ Retrieves a list of all Place objects """
 
