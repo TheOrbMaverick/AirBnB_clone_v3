@@ -37,9 +37,6 @@ def add_amenity():
         abort(404, "Not a JSON")
     if "name" not in request.get_json:
         abort(404, "Missing name")
-    amenities = []
-    new_amenity = Amenity(name = request.json["name"])
-    storage.new(new_amenity)
-    storage.save()
-    amenities.append(new_amenity.to_dict())
-    return jsonify(amenities[0]), 201
+    amenity_data = request.get_json()
+    amenity = Amenity(**amenity_data)
+    return jsonify(amenity.to_dict()), 201
