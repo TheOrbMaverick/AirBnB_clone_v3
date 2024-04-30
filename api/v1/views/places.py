@@ -121,12 +121,3 @@ def search_places():
         places = places_with_amenities
 
     return jsonify([place.to_dict() for place in places])
-
-
-@app_views.route('/cities/<city_id>/places', methods=['GET'])
-def get_city_places(city_id):
-    """Retrieves the list of all Place objects of a City"""
-    city = storage.get(City, city_id)
-    if city is None:
-        abort(404)
-    return jsonify([place.to_dict() for place in city.places])

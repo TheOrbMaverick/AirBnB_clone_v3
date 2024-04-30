@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 """State class"""
+import sys
+sys.path.append("/Users/macbookair/Documents/ALX/AirBnB_clone_v3")
 from api.v1.views import app_views
 from flask import jsonify, abort, request
 from models import storage
@@ -10,10 +12,11 @@ from models.state import State
 def get_all_states():
     """Retrieves the list of all State objects"""
     all_states = [state.to_dict() for state in storage.all(State).values()]
+    print(all_states)
     return jsonify(all_states)
 
 
-@app_views.route('/states/<state_id>', methods=['GET'])
+@app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET'])
 def get_state(state_id):
     """Retrieves a State object"""
     state = storage.get(State, state_id)
