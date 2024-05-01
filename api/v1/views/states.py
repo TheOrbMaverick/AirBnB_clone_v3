@@ -6,7 +6,6 @@ from api.v1.views import app_views
 from flask import jsonify, abort, request
 from models import storage
 from models.state import State
-from datetime import datetime
 
 
 @app_views.route('/states', strict_slashes=False, methods=['GET'])
@@ -64,7 +63,5 @@ def update_state(state_id):
     request_data.pop('updated_at', None)
     for key, value in request_data.items():
         setattr(state, key, value)
-    # Update the updated_at field to the current timestamp
-    state.updated_at = datetime.now()
     storage.save()
     return jsonify(state.to_dict()), 200
