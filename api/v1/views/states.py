@@ -53,17 +53,15 @@ def create_state():
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['PUT'])
 def update_state(state_id):
     """Updates a State object"""
-    state = storage.get(State, state_id)
-    if state is None:
+    all_states = storage.all("State").values()
+    one_state_obj = [obj.to_dict() for obj in all_states if obj.id == state_id]
+    if one_state_obj == []:
         abort(404)
-    if not request.json:
+    if not request.get_json():
         abort(400, 'Not a JSON')
-    request_data = request.json
-    request_data.pop('id', None)
-    request_data.pop('created_at', None)
-    request_data.pop('updated_at', None)
-    for key, value in request_data.items():
-        setattr(state, key, value)
-    state.updated_at = datetime.now()
+    one_state_obj[0]["name"] = request.json["name"]
+    for obj in all_states:
+        if obj.id == state_id:
+            obj.name = request.json["name"]
     storage.save()
-    return jsonify(state.to_dict()), 200
+    return jsonify(one_state_obj[0]), 200
