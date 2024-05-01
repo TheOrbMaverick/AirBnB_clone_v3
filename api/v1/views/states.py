@@ -7,34 +7,32 @@ from models.state import State
 from datetime import datetime
 
 
-all_states = [state.to_dict() for state in storage.all(State).values()]
-
-
 @app_views.route('/states', strict_slashes=False, methods=['GET'])
 def get_all_states():
     """Retrieves the list of all State objects"""
+    all_states = [state.to_dict() for state in storage.all(State).values()]
+    print(all_states)
     return jsonify(all_states)
 
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET'])
 def get_state(state_id):
     """Retrieves a State object"""
-    state_obj = []
-    for state in all_states:
-        if state is None:
-            abort(404)
-        else:
-            state_obj.append(state)
-    return jsonify(state_obj[0].to_dict())
+    one_state_obj = [state.to_dict() for state in storage.all(State).values()
+                     if state.id == state_id]
+    if one_state_obj is None:
+        abort(404)
+    return jsonify(one_state_obj.to_dict())
 
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['DELETE'])
 def delete_state(state_id):
     """Deletes a State object"""
-    state = storage.get(State, state_id)
-    if state is None:
+    one_state_obj = [state.to_dict() for state in storage.all(State).values()
+                     if state.id == state_id]
+    if one_state_obj is None:
         abort(404)
-    storage.delete(state)
+    storage.delete(one_state_obj)
     storage.save()
     return jsonify({}), 200
 
@@ -42,14 +40,16 @@ def delete_state(state_id):
 @app_views.route('/states', strict_slashes=False, methods=['POST'])
 def create_state():
     """Creates a State"""
-    if not request.json:
+    if not request.get_json():
         abort(400, 'Not a JSON')
-    if 'name' not in request.json:
+    if 'name' not in request.get_json():
         abort(400, 'Missing name')
-    new_state = State(**request.json)
+    one_state_obj = []
+    new_state = State(name=request.json['name'])
     storage.new(new_state)
     storage.save()
-    return jsonify(new_state.to_dict()), 201
+    one_state_obj.append(new_state.to_dict())
+    return jsonify(one_state_obj[0]), 201
 
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['PUT'])
