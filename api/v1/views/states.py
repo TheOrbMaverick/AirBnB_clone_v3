@@ -19,10 +19,13 @@ def get_all_states():
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET'])
 def get_state(state_id):
     """Retrieves a State object"""
-    state = storage.get(State, state_id)
-    if state is None:
-        abort(404)
-    return jsonify(state.to_dict())
+    state_obj = []
+    for state in all_states:
+        if state is None:
+            abort(404)
+        else:
+            state_obj.append(state)
+    return jsonify(state_obj[0].to_dict())
 
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['DELETE'])
