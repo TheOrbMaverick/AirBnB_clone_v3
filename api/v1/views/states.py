@@ -7,11 +7,12 @@ from models.state import State
 from datetime import datetime
 
 
+all_states = [state.to_dict() for state in storage.all(State).values()]
+
+
 @app_views.route('/states', strict_slashes=False, methods=['GET'])
 def get_all_states():
     """Retrieves the list of all State objects"""
-    all_states = [state.to_dict() for state in storage.all(State).values()]
-    print(all_states)
     return jsonify(all_states)
 
 
