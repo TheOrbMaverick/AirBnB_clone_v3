@@ -7,11 +7,10 @@ from models.state import State
 from datetime import datetime
 
 
-
 @app_views.route('/states', strict_slashes=False, methods=['GET'])
 def get_all_states():
     """Retrieves the list of all State objects"""
-    all_states = [state.to_dict() for state in storage.all("State").values()]
+    all_states = [state.to_dict() for state in storage.all(State).values()]
     print(all_states)
     return jsonify(all_states)
 
@@ -19,7 +18,7 @@ def get_all_states():
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET'])
 def get_state(state_id):
     """Retrieves a State object"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     return jsonify(state.to_dict())
@@ -28,7 +27,7 @@ def get_state(state_id):
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['DELETE'])
 def delete_state(state_id):
     """Deletes a State object"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     storage.delete(state)
@@ -52,7 +51,7 @@ def create_state():
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['PUT'])
 def update_state(state_id):
     """Updates a State object"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     if not request.json:
