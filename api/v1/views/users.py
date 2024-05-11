@@ -17,7 +17,7 @@ def list_users():
 
 @app_views.route('/users/<user_id>', strict_slashes=False, methods=['GET'])
 def get_user(user_id):
-    '''Retrieves an User object'''
+    '''Retrieves a User object'''
     all_stored_users = storage.all("User").values()
     one_user_obj = [obj.to_dict() for obj in all_stored_users
                    if obj.id == user_id]
@@ -28,7 +28,7 @@ def get_user(user_id):
 
 @app_views.route('/users/<user_id>', strict_slashes=False, methods=['DELETE'])
 def delete_user(user_id):
-    '''Deletes an User object'''
+    '''Deletes a User object'''
     all_stored_users = storage.all("User").values()
     one_user_obj = [obj.to_dict() for obj in all_stored_users
                    if obj.id == user_id]
@@ -44,7 +44,7 @@ def delete_user(user_id):
 
 @app_views.route('/users/', strict_slashes=False, methods=['POST'])
 def create_user():
-    '''Creates an User'''
+    '''Creates a User'''
     if not request.get_json():
         abort(400, 'Not a JSON')
     if 'name' not in request.get_json():
@@ -59,7 +59,7 @@ def create_user():
 
 @app_views.route('/users/<user_id>', strict_slashes=False, methods=['PUT'])
 def updates_user(user_id):
-    '''Updates an User object'''
+    '''Updates a User object'''
     all_stored_users = storage.all("User").values()
     one_user_obj = [obj.to_dict() for obj in all_stored_users
                    if obj.id == user_id]
